@@ -11,6 +11,6 @@ public class CategoryController {
 
     @GetMapping
     public List<String> getCategories() {
-        return Arrays.asList("Electronics", "Books", "Clothing", "Home", "Toys");
+        return Arrays.asList("전자기기", "서적", "의류", "취미용품", "생활용품");
     }
 }
