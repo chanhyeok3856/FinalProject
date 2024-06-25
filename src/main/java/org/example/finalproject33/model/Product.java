@@ -1,26 +1,21 @@
 package org.example.finalproject33.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
+
+import jakarta.persistence.*;
 
 @Entity
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String category;
     private String price;
     private String description;
-
     @Lob
     private byte[] image;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -68,4 +63,5 @@ public class Product {
     public void setImage(byte[] image) {
         this.image = image;
     }
+// Getters and setters
 }
