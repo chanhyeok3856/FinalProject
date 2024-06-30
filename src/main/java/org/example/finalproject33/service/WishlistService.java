@@ -17,14 +17,14 @@ public class WishlistService {
         this.wishlistRepository = wishlistRepository;
     }
 
-    public Wishlist addToWishlist(Long userId, Long productId) {
+    public Wishlist addToWishlist(int userId, int productId) {
         Wishlist wishlist = new Wishlist();
         wishlist.setUserId(userId);
         wishlist.setProductId(productId);
         return wishlistRepository.save(wishlist);
     }
 
-    public List<Wishlist> getWishlistByUserId(Long userId) {
+    public List<Wishlist> getWishlistByUserId(int userId) {
         return wishlistRepository.findByUserId(userId);
     }
 }

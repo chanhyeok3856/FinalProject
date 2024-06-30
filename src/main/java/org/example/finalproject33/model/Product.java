@@ -8,7 +8,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String name;
     private String category;
     private String price;
@@ -16,11 +16,11 @@ public class Product {
     @Lob
     private byte[] image;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -63,5 +63,4 @@ public class Product {
     public void setImage(byte[] image) {
         this.image = image;
     }
-// Getters and setters
 }

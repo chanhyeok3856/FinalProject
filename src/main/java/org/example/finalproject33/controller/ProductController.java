@@ -36,7 +36,7 @@ public class ProductController {
             if (image != null && !image.isEmpty()) {
                 product.setImage(image.getBytes());
             } else {
-                // 기본 이미지를 설정합니다.
+                // 기본 이미지 설정
                 byte[] defaultImage = getDefaultImage();
                 product.setImage(defaultImage);
             }
@@ -47,13 +47,11 @@ public class ProductController {
     }
 
     private byte[] getDefaultImage() {
-        // 기본 이미지 파일을 바이트 배열로 읽어옵니다.
         try {
             InputStream is = getClass().getResourceAsStream("/static/images/no-image.png");
             if (is != null) {
                 return is.readAllBytes();
             } else {
-                // 기본 이미지 파일을 찾을 수 없을 때 예외를 던집니다.
                 throw new IOException("기본 이미지가 없습니다");
             }
         } catch (IOException e) {

@@ -17,13 +17,13 @@ public class WishlistController {
     private WishlistService wishlistService;
 
     @PostMapping("/add")
-    public ResponseEntity<Wishlist> addToWishlist(@RequestParam Long userId, @RequestParam Long productId) {
+    public ResponseEntity<Wishlist> addToWishlist(@RequestParam int userId, @RequestParam int productId) {
         Wishlist wishlist = wishlistService.addToWishlist(userId, productId);
         return new ResponseEntity<>(wishlist, HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Wishlist>> getWishlistByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Wishlist>> getWishlistByUserId(@PathVariable int userId) {
         List<Wishlist> wishlist = wishlistService.getWishlistByUserId(userId);
         return new ResponseEntity<>(wishlist, HttpStatus.OK);
     }
