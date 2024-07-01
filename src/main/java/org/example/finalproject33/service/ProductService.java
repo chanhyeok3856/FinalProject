@@ -29,11 +29,11 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public Product getProductById(Long id) {
+    public Product getProductById(int id) {
         return productRepository.findById(id).orElse(null);
     }
 
-    public void deleteProduct(Long id) {
+    public void deleteProduct(int id) {
         productRepository.deleteById(id);
     }
 }

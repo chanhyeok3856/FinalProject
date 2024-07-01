@@ -10,14 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-
     @Autowired
     private ProductService productService;
 
@@ -34,11 +32,12 @@ public class ProductController {
         product.setDescription(description);
         try {
             if (image != null && !image.isEmpty()) {
-                product.setImage(image.getBytes());
+                String imagePath = saveImage(image);
+                product.setImagePath(imagePath);
             } else {
-                // 기본 이미지 설정
-                byte[] defaultImage = getDefaultImage();
-                product.setImage(defaultImage);
+                // 기본 이미지 경로 설정
+                String defaultImagePath = "/images/no-image.png";
+                product.setImagePath(defaultImagePath);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,21 +45,17 @@ public class ProductController {
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
-    private byte[] getDefaultImage() {
-        try {
-            InputStream is = getClass().getResourceAsStream("/static/images/no-image.png");
-            if (is != null) {
-                return is.readAllBytes();
-            } else {
-                throw new IOException("기본 이미지가 없습니다");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new byte[0];
-        }
+
+    private String saveImage(MultipartFile image) throws IOException {
+        String directory = new File("src/main/resources/static/images/").getAbsolutePath(); // 이미지 저장 경로 설정
+        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+        String filePath = directory + File.separator+fileName;
+        File dest = new File(filePath);
+        image.transferTo(dest);
+        return "/images/" + fileName;
     }
 
-    @GetMapping
+@GetMapping
     public ResponseEntity<Page<Product>> getAllProducts(Pageable pageable) {
         Page<Product> products = productService.getAllProducts(pageable);
         return new ResponseEntity<>(products, HttpStatus.OK);
@@ -79,13 +74,14 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<Product> getProductById(@PathVariable int id) {
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
+

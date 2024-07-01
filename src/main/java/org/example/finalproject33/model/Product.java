@@ -12,9 +12,11 @@ public class Product {
     private String name;
     private String category;
     private String price;
-    private String description;
     @Lob
-    private byte[] image;
+    private String description;
+    @Column(name = "image_path", nullable = true)
+    private String imagePath;
+
 
     public int getId() {
         return id;
@@ -56,11 +58,11 @@ public class Product {
         this.description = description;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }
